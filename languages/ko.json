@@ -1,0 +1,17 @@
+{
+	"type":{
+		"PAPER":"논문",
+		"THESIS":"졸업논문",
+		"PATENT":"특허",
+		"BOOK":"도서",
+		"CONFERENCE":"컨퍼런스",
+		"MEDIA":"TV/뉴스/미디어"
+	},
+	"step":{
+		"1":"Researcher",
+		"2":"Ph.D. Candidate",
+		"3":"Ph.D. Course",
+		"4":"Ph.D.",
+		"4":"Master"
+	}
+}
