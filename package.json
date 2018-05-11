@@ -30,6 +30,14 @@
 		"templet":{
 			"type":"templet",
 			"default":"default"
+		},
+		"author_label":{
+			"type":"int",
+			"default":0
+		},
+		"author_name":{
+			"type":"string",
+			"default":"nickname"
 		}
 	},
 	"targets":{
