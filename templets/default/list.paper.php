@@ -126,7 +126,7 @@ if (defined('__IM__') == false) exit;
 		<div class="publisher">
 			<i class="xi xi-book-spread"></i>
 			<a href="<?php echo $me->getUrl('list','publisher/'.$item->publisher->idx); ?>"><?php echo $item->publisher->title; ?></a>,
-			Volume : <?php echo $item->volume_no; ?><?php if ($item->issue_no > 0) { ?>, Issue : <?php echo $item->issue_no; ?><?php } ?>, PP : <?php echo $item->page_no; ?> (<a href="<?php echo $me->getUrl('list','year/'.$item->year); ?>"><?php echo $item->year; ?></a>)
+			<?php echo $item->volume_no; ?><?php if ($item->issue_no > 0) { ?> (<?php echo $item->issue_no; ?>)<?php } ?>, <?php echo $item->page_no; ?> (<a href="<?php echo $me->getUrl('list','year/'.$item->year); ?>"><?php echo $item->year; ?></a>)
 		</div>
 	</li>
 	<?php } ?>
