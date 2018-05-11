@@ -7,7 +7,7 @@
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
  * @version 3.0.0
- * @modified 2018. 2. 1.
+ * @modified 2018. 5. 11.
  */
 var Publication = {
 	/**
@@ -511,7 +511,7 @@ var Publication = {
 		search:function(index) {
 			new Ext.Window({
 				id:"ModulePublicationAuthorSearchWindow",
-				title:"회원검색",
+				title:"저자검색",
 				width:600,
 				height:400,
 				modal:true,
@@ -523,38 +523,11 @@ var Publication = {
 						id:"ModulePublicationAuthorSearchList",
 						border:false,
 						tbar:[
-							new Ext.form.ComboBox({
-								id:"ModulePublicationAuthorSearchLabel",
-								store:new Ext.data.JsonStore({
-									proxy:{
-										type:"ajax",
-										url:ENV.getProcessUrl("member","@getLabels"),
-										extraParams:{type:"title"},
-										reader:{type:"json"}
-									},
-									remoteSort:false,
-									sorters:[{property:"sort",direction:"ASC"}],
-									fields:["idx","title"]
-								}),
-								width:140,
-								autoLoadOnValue:true,
-								editable:false,
-								displayField:"title",
-								valueField:"idx",
-								value:"0",
-								listeners:{
-									change:function(form,value) {
-										Ext.getCmp("ModulePublicationAuthorSearchList").getStore().getProxy().setExtraParam("label",value);
-										Ext.getCmp("ModulePublicationAuthorSearchList").getStore().loadPage(1);
-									}
-								}
-							}),
 							new Ext.form.TextField({
 								id:"ModulePublicationAuthorSearchKeyword",
-								width:140,
-								emptyText:"이름/학번/사번",
+								emptyText:"이름/닉네임",
 								enableKeyEvents:true,
-								flex:1,
+								width:140,
 								listeners:{
 									keyup:function(form,e) {
 										if (e.keyCode == 13) {
@@ -576,14 +549,14 @@ var Publication = {
 							proxy:{
 								type:"ajax",
 								simpleSortMode:true,
-								url:ENV.getProcessUrl("member","@getMembers"),
+								url:ENV.getProcessUrl("publication","@getAuthors"),
 								reader:{type:"json"}
 							},
 							remoteSort:true,
 							sorters:[{property:"idx",direction:"ASC"}],
 							autoLoad:true,
 							pageSize:50,
-							fields:["idx","name","nickname","email"],
+							fields:["idx","name","author_name","email","count"],
 							listeners:{
 								load:function(store,records,success,e) {
 									if (success == false) {
@@ -599,16 +572,20 @@ var Publication = {
 						columns:[{
 							text:"이름",
 							minWidth:100,
-							dataIndex:"name",
-							sortable:true,
 							flex:1,
-							renderer:function(value,p,record) {
-								return value+"("+record.data.nickname+")";
-							}
+							dataIndex:"name"
 						},{
 							text:"이메일주소",
 							width:200,
 							dataIndex:"email"
+						},{
+							text:"등록수",
+							width:80,
+							dataIndex:"count",
+							align:"right",
+							renderer:function(value) {
+								return Ext.util.Format.number(value,"0,000")+"건";
+							}
 						}],
 						selModel:new Ext.selection.CheckboxModel({mode:"SINGLE"}),
 						bbar:new Ext.PagingToolbar({
@@ -758,6 +735,31 @@ var Publication = {
 					}
 				}
 			}).show();
+		},
+		delete:function() {
+			var selected = Ext.getCmp("ModulePublicationCategoryList").getSelectionModel().getSelection();
+			if (selected.length == 0) {
+				Ext.Msg.show({title:Admin.getText("alert/error"),msg:"삭제할 카테고리를 선택하여 주십시오.",buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
+				return;
+			}
+			
+			var idxes = [];
+			for (var i=0, loop=selected.length;i<loop;i++) {
+				idxes.push(selected[i].get("idx"));
+			}
+			
+			Ext.Msg.show({title:Admin.getText("alert/info"),msg:"선택하신 카테고리를 정말 삭제하시겠습니까?<br>해당 카테고리에 포함된 모든 데이터가 함께 삭제됩니다.",buttons:Ext.Msg.OKCANCEL,icon:Ext.Msg.QUESTION,fn:function(button) {
+				if (button == "ok") {
+					Ext.Msg.wait(Admin.getText("action/working"),Admin.getText("action/wait"));
+					$.send(ENV.getProcessUrl("publication","@deleteCategory"),{idx:idxes.join(",")},function(result) {
+						if (result.success == true) {
+							Ext.Msg.show({title:Admin.getText("alert/info"),msg:Admin.getText("action/worked"),buttons:Ext.Msg.OK,icon:Ext.Msg.INFO,fn:function() {
+								Ext.getCmp("ModulePublicationCategoryList").getStore().reload();
+							}});
+						}
+					});
+				}
+			}});
 		}
 	},
 	/**
