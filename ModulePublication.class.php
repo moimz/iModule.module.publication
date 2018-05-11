@@ -8,7 +8,7 @@
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
  * @version 3.0.0
- * @modified 2018. 1. 31.
+ * @modified 2018. 5. 11.
  */
 class ModulePublication {
 	/**
@@ -511,6 +511,7 @@ class ModulePublication {
 		$year = Request('year');
 		$publisher = Request('publisher');
 		$author = Request('author');
+		$keyword = Request('keyword');
 		
 		if ($mode == 'year') {
 			$selectors = $this->db()->select($this->table->article,'year, count(year) as count')->where('category',$category->idx)->groupBy('year')->orderBy('year','desc')->get();
@@ -528,6 +529,8 @@ class ModulePublication {
 		}
 		
 		if ($mode == 'author') {
+			$selectors = $this->db()->select($this->table->article.' p','a.midx as idx, count(a.midx) as count')->join($this->table->author.' a','a.aidx=p.idx','LEFT')->where('p.category',$category->idx)->where('a.midx',0,'>')->groupBy('a.midx')->get();
+			
 			if ($code != 'all') {
 				$author = $this->IM->getModule('member')->getMember($code);
 				if ($author->idx == 0) $author = null;
@@ -555,6 +558,7 @@ class ModulePublication {
 		$pagination = $this->getTemplet()->getPagination($p,ceil($total/$limit),10,$this->getUrl('list',$mode.'/'.$code.'/{PAGE}',false));
 		
 		$header = PHP_EOL.'<form id="ModulePublicationListForm">'.PHP_EOL;
+		$header.= '<input type="hidden" name="mode" value="'.$mode.'">'.PHP_EOL;
 		$footer = PHP_EOL.'</form>'.PHP_EOL.'<script>Publication.list.init();</script>'.PHP_EOL;
 		
 		/**
@@ -575,6 +579,26 @@ class ModulePublication {
 		
 		$this->categories[$idx] = $category;
 		return $this->categories[$idx];
+	}
+	
+	/**
+	 * 저자이름을 가져온다.
+	 *
+	 * @param object/string $author 저자정보
+	 * @return string $name
+	 */
+	function getAuthorName($author) {
+		if (is_object($author) == true) {
+			$author_name = $this->getModule()->getConfig('author_name');
+			if (strpos($author_name,'extra.') === 0) {
+				$author_name = str_replace('extra.','',$author_name);
+				return isset($author->extras->$author_name) == true && strlen($author->extras->$author_name) > 0 ? $author->extras->$author_name : $author->nickname;
+			} else {
+				return isset($author->$author_name) == true && strlen($author->$author_name) > 0 ? $author->$author_name : $author->nickname;
+			}
+		} else {
+			return $author;
+		}
 	}
 	
 	/**
