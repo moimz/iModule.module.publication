@@ -23,43 +23,63 @@ if (defined('__IM__') == false) exit;
 </div>
 
 <div class="searchbox">
-	<ul data-role="form" class="inner">
-		<?php if ($mode == 'year') { ?>
-		<li>
-			<label>연도</label>
-			<div>
-				<div data-role="input">
-					<select name="year">
-						<?php foreach ($selectors as $selector) { ?>
-						<option value="<?php echo $selector->year; ?>"<?php echo $year == $selector->year ? ' selected="selected"' : ''; ?>><?php echo $selector->year.'년도 ('.number_format($selector->count).'건)'; ?></option>
-						<?php } ?>
-					</select>
-				</div>
-			</div>
+	<ul>
+		<li class="input">
+			<ul>
+				<?php if ($mode == 'year') { ?>
+				<li>
+					<label>연도</label>
+					<div>
+						<div data-role="input">
+							<select name="code">
+								<?php foreach ($selectors as $selector) { ?>
+								<option value="<?php echo $selector->year; ?>"<?php echo $code == $selector->year ? ' selected="selected"' : ''; ?>><?php echo $selector->year.'년도 ('.number_format($selector->count).'건)'; ?></option>
+								<?php } ?>
+							</select>
+						</div>
+					</div>
+				</li>
+				<?php } ?>
+				
+				<?php if ($mode == 'publisher') { ?>
+				<li>
+					<label>저널명</label>
+					<div>
+						<div data-role="input" data-search="<?php echo $IM->getProcessUrl('publication','searchPublisher'); ?>?type=<?php echo $type; ?>">
+							<input type="search" name="publisher" placeholder="등록되어 있는 저널명이 자동검색됩니다." autocomplete="off" value="<?php echo $publisher != null ? $publisher->title : ''; ?>">
+						</div>
+					</div>
+				</li>
+				<?php } ?>
+				
+				<?php if ($mode == 'author') { ?>
+				<li>
+					<label>저자</label>
+					<div>
+						<div data-role="input">
+							<select name="code">
+								<?php foreach ($selectors as $selector) { ?>
+								<option value="<?php echo $selector->idx; ?>"<?php echo $code == $selector->idx ? ' selected="selected"' : ''; ?>><?php echo $me->getAuthorName($IM->getModule('member')->getMember($selector->idx)).' ('.number_format($selector->count).'건)'; ?></option>
+								<?php } ?>
+							</select>
+						</div>
+					</div>
+				</li>
+				<?php } ?>
+				
+				<li>
+					<label>검색어</label>
+					<div>
+						<div data-role="input">
+							<input type="search" name="keyword" placeholder="논문명 / 개요 / 키워드" value="<?php echo GetString($keyword,'input'); ?>">
+						</div>
+					</div>
+				</li>
+			</ul>
 		</li>
-		<?php } ?>
-		
-		<?php if ($mode == 'publisher') { ?>
-		<li>
-			<label>저널명</label>
-			<div>
-				<div data-role="input" data-search="<?php echo $IM->getProcessUrl('publication','searchPublisher'); ?>?type=<?php echo $type; ?>">
-					<input type="search" name="publisher" placeholder="등록되어 있는 저널명이 자동검색됩니다." autocomplete="off" value="<?php echo $publisher != null ? $publisher->title : ''; ?>">
-				</div>
-			</div>
+		<li class="button">
+			<button type="submit">검색하기</button>
 		</li>
-		<?php } ?>
-		
-		<?php if ($type == 'PAPER') { ?>
-		<li>
-			<label>검색어</label>
-			<div>
-				<div data-role="input">
-					<input type="search" name="keyword" placeholder="논문명 / 개요 / 키워드">
-				</div>
-			</div>
-		</li>
-		<?php } ?>
 	</ul>
 </div>
 
@@ -99,7 +119,7 @@ if (defined('__IM__') == false) exit;
 			<i class="xi xi-users"></i>
 			<?php foreach ($item->author as $member) { ?>
 				<?php if ($member->midx == 0) { ?><span><span><?php echo $member->name; ?></span></span><?php } ?>
-				<?php if ($member->midx > 0) { $member = $IM->getModule('member')->getMember($member->midx); ?><span><a href="<?php echo $me->getUrl('list','author/'.$member->idx); ?>"><i class="photo" style="background-image:url(<?php echo $member->photo; ?>);"></i><?php echo $member->nickname; ?></a></span><?php } ?>
+				<?php if ($member->midx > 0) { $member = $IM->getModule('member')->getMember($member->midx); ?><span><a href="<?php echo $me->getUrl('list','author/'.$member->idx); ?>"><i class="photo" style="background-image:url(<?php echo $member->photo; ?>);"></i><?php echo $me->getAuthorName($member); ?></a></span><?php } ?>
 			<?php } ?>
 		</div>
 		

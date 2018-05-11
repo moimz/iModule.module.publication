@@ -11,8 +11,20 @@
  */
 @import url('https://fonts.googleapis.com/css?family=Merriweather');
 
-div[data-module=publication] .searchbox {background:#f4f4f4; border:1px solid #e5e5e5; margin-top:20px; padding:0px 10px;}
-div[data-module=publication] .searchbox > ul > li:last-child {border-bottom:0;}
+div[data-module=publication] div.searchbox {border:1px solid #e5e5e5; margin-top:20px;}
+div[data-module=publication] div.searchbox > ul {list-style:none; display:table; width:100%; table-layout:fixed;}
+div[data-module=publication] div.searchbox > ul > li {display:table-cell; vertical-align:middle;}
+div[data-module=publication] div.searchbox > ul > li.input {width:80%;}
+div[data-module=publication] div.searchbox > ul > li.button {width:20%; text-align:center; background-color:#f7f7f7; border-left:1px solid #e5e5e5;}
+
+div[data-module=publication] div.searchbox > ul > li.button > button {display:inline-block; line-height:14px; padding:10px 20px; background-color:#1c4b8c; color:#FFF; cursor:pointer; border:0;}
+div[data-module=publication] div.searchbox > ul > li.line2 {height:145px; line-height:145px;}
+div[data-module=publication] div.searchbox > ul > li.line1 {height:82px; line-height:82px;}
+div[data-module=publication] div.searchbox > ul > li.input > ul {list-style:none; margin:5px 15px;}
+div[data-module=publication] div.searchbox > ul > li.input > ul > li {display:block; font-size:0; height:40px; border-bottom:1px solid #e5e5e5; padding:10px 0px;}
+div[data-module=publication] div.searchbox > ul > li.input > ul > li:last-child {border-bottom:0;}
+div[data-module=publication] div.searchbox > ul > li.input > ul > li > label {display:inline-block; width:120px; font-weight:bold; vertical-align:middle; font-size:14px;}
+div[data-module=publication] div.searchbox > ul > li.input > ul > li > div {display:inline-block; width:calc(100% - 120px); vertical-align:middle; font-size:14px;}
 
 div[data-module=publication] h4 {font-size:16px; height:30px; line-height:30px; margin-top:20px; font-family:Merriweather;}
 
@@ -51,3 +63,12 @@ div[data-module=publication] ul[data-role=list].paper > li > div.publisher > a {
 
 
 div[data-module=publication] div.pagination {margin-top:20px; text-align:center;}
+
+@media (max-width:767px) {
+	div[data-module=publication] div.searchbox > ul > li {float:none;}
+	div[data-module=publication] div.searchbox > ul > li.input {display:block; width:100%;}
+	div[data-module=publication] div.searchbox > ul > li.button {display:block; width:100%; background-color:#f7f7f7; border-left:none; border-top:1px solid #e5e5e5; padding:10px 0;}
+	div[data-module=publication] div.searchbox > ul > li.input > ul {margin:0 10px;}
+	div[data-module=publication] div.searchbox > ul > li.input > ul > li > label {width:90px;}
+	div[data-module=publication] div.searchbox > ul > li.input > ul > li > div {width:calc(100% - 90px);}
+}
