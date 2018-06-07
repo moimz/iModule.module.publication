@@ -243,14 +243,14 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 				selModel:new Ext.selection.CheckboxModel(),
 				bbar:[
 					new Ext.Button({
-						text:'<i class="fa fa-caret-up"></i>',
+						iconCls:"fa fa-caret-up",
 						handler:function() {
 							Admin.gridSort(Ext.getCmp("ModulePublicationCategoryList"),"sort","up");
 							Admin.gridSave(Ext.getCmp("ModulePublicationCategoryList"),ENV.getProcessUrl("publication","@saveCategorySort"),500);
 						}
 					}),
 					new Ext.Button({
-						text:'<i class="fa fa-caret-down"></i>',
+						iconCls:"fa fa-caret-down",
 						handler:function() {
 							Admin.gridSort(Ext.getCmp("ModulePublicationCategoryList"),"sort","down");
 							Admin.gridSave(Ext.getCmp("ModulePublicationCategoryList"),ENV.getProcessUrl("publication","@saveCategorySort"),500);

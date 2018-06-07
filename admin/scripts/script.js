@@ -305,13 +305,13 @@ var Publication = {
 										selModel:new Ext.selection.CheckboxModel(),
 										bbar:[
 											new Ext.Button({
-												text:'<i class="fa fa-caret-up"></i>',
+												iconCls:"fa fa-caret-up",
 												handler:function() {
 													Admin.gridSort(Ext.getCmp("ModulePublicationArticleAddFormAuthorList"),"sort","up");
 												}
 											}),
 											new Ext.Button({
-												text:'<i class="fa fa-caret-down"></i>',
+												iconCls:"fa fa-caret-down",
 												handler:function() {
 													Admin.gridSort(Ext.getCmp("ModulePublicationArticleAddFormAuthorList"),"sort","down");
 												}
