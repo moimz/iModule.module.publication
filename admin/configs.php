@@ -23,7 +23,7 @@ new Ext.form.Panel({
 		new Ext.form.FieldSet({
 			title:"기본설정",
 			items:[
-				Admin.templetField("템플릿","templet","publication",false),
+				Admin.templetField("템플릿","templet","module","publication",false),
 				new Ext.form.ComboBox({
 					fieldLabel:"저자그룹",
 					name:"author_label",
