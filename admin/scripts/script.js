@@ -68,8 +68,32 @@ var Publication = {
 												Ext.getCmp("ModulePublicationArticleAddForm-PAPER").hide();
 												Ext.getCmp("ModulePublicationArticleAddForm-PAPER").disable();
 												
+												Ext.getCmp("ModulePublicationArticleAddForm-THESIS").hide();
+												Ext.getCmp("ModulePublicationArticleAddForm-THESIS").disable();
+												
+												Ext.getCmp("ModulePublicationArticleAddForm-CONFERENCE").hide();
+												Ext.getCmp("ModulePublicationArticleAddForm-CONFERENCE").disable();
+												
+												Ext.getCmp("ModulePublicationArticleAddForm-PATENT").hide();
+												Ext.getCmp("ModulePublicationArticleAddForm-PATENT").disable();
+												
+												Ext.getCmp("ModulePublicationArticleAddForm-BOOK").hide();
+												Ext.getCmp("ModulePublicationArticleAddForm-BOOK").disable();
+												
+												Ext.getCmp("ModulePublicationArticleAddForm-MEDIA").hide();
+												Ext.getCmp("ModulePublicationArticleAddForm-MEDIA").disable();
+												
+												Ext.getCmp("ModulePublicationArticleAddForm-BOOK").hide();
+												Ext.getCmp("ModulePublicationArticleAddForm-BOOK").disable();
+												
 												Ext.getCmp("ModulePublicationArticleAddForm-"+data.type).show();
 												Ext.getCmp("ModulePublicationArticleAddForm-"+data.type).enable();
+												
+												if (value == "BOOK") {
+													Ext.getCmp("ModulePublicationArticleAddAttachment").setTitle("표지이미지");
+												} else {
+													Ext.getCmp("ModulePublicationArticleAddAttachment").setTitle("첨부파일");
+												}
 											}
 										}
 									})
@@ -164,6 +188,163 @@ var Publication = {
 								]
 							}),
 							new Ext.form.FieldSet({
+								id:"ModulePublicationArticleAddForm-THESIS",
+								title:"논문정보 입력",
+								items:[
+									new Ext.form.TextField({
+										fieldLabel:"논문명",
+										name:"thesis_title"
+									}),
+									new Ext.form.FieldContainer({
+										layout:"hbox",
+										items:[
+											new Ext.form.ComboBox({
+												fieldLabel:"구분",
+												name:"thesis_type",
+												store:new Ext.data.ArrayStore({
+													fields:["display","value"],
+													data:[["Ph.D","Ph.D"],["MS","MS"]]
+												}),
+												displayField:"display",
+												valueField:"value",
+												value:"Ph.D",
+												flex:1
+											}),
+											new Ext.form.TextField({
+												fieldLabel:"연도",
+												name:"thesis_year",
+												value:moment().format("YYYY"),
+												flex:1
+											}),
+											new Ext.form.ComboBox({
+												fieldLabel:"학기(월)",
+												name:"thesis_month",
+												store:new Ext.data.ArrayStore({
+													fields:["display","value"],
+													data:[["February","2"],["August","8"]]
+												}),
+												displayField:"display",
+												valueField:"value",
+												value:"2",
+												flex:1
+											})
+										]
+									})
+								]
+							}),
+							new Ext.form.FieldSet({
+								id:"ModulePublicationArticleAddForm-CONFERENCE",
+								title:"컨퍼런스 입력",
+								items:[
+									new Ext.form.TextField({
+										fieldLabel:"발표제목",
+										name:"conference_title"
+									}),
+									new Ext.form.FieldContainer({
+										fieldLabel:"컨퍼런스명",
+										layout:"hbox",
+										items:[
+											new Ext.form.ComboBox({
+												name:"conference_publisher",
+												store:new Ext.data.JsonStore({
+													proxy:{
+														type:"ajax",
+														url:ENV.getProcessUrl("publication","@getPublishers"),
+														extraParams:{type:"CONFERENCE"},
+														reader:{type:"json"}
+													},
+													autoLoad:true,
+													pageSize:0,
+													remoteSort:false,
+													sorters:[{property:"title",direction:"ASC"}],
+													fields:["idx","title"]
+												}),
+												flex:1,
+												autoLoadOnValue:true,
+												editable:false,
+												displayField:"title",
+												valueField:"idx"
+											}),
+											new Ext.Button({
+												iconCls:"mi mi-add",
+												text:"컨퍼런스추가",
+												style:{marginLeft:"5px"},
+												handler:function() {
+													Publication.publisher.add("CONFERENCE");
+												}
+											})
+										]
+									}),
+									new Ext.form.FieldContainer({
+										fieldLabel:"구분",
+										layout:"hbox",
+										items:[
+											new Ext.form.ComboBox({
+												name:"conference_type",
+												store:new Ext.data.ArrayStore({
+													fields:["display","value"],
+													data:[["Oral","Oral"],["Poster","Poster"]]
+												}),
+												displayField:"display",
+												valueField:"value",
+												value:"Oral",
+												width:100
+											})
+										]
+									})
+								]
+							}),
+							new Ext.form.FieldSet({
+								id:"ModulePublicationArticleAddForm-PATENT",
+								title:"특허정보 입력",
+								items:[
+									new Ext.form.TextField({
+										fieldLabel:"특허제목",
+										name:"patent_title"
+									}),
+									new Ext.form.FieldContainer({
+										layout:"hbox",
+										items:[
+											new Ext.form.ComboBox({
+												fieldLabel:"구분",
+												name:"patent_type",
+												store:new Ext.data.ArrayStore({
+													fields:["display","value"],
+													data:[["출원",1],["등록",2]]
+												}),
+												displayField:"display",
+												valueField:"value",
+												value:1,
+												width:200,
+												listeners:{
+													change:function(form,value) {
+														if (value == 1) {
+															form.getForm().findField("patent_date").setFieldLabel("출원일");
+															form.getForm().findField("patent_no").setFieldLabel("출원번호");
+														} else {
+															form.getForm().findField("patent_date").setFieldLabel("등록일");
+															form.getForm().findField("patent_no").setFieldLabel("등록번호");
+														}
+													}
+												}
+											}),
+											new Ext.form.DateField({
+												fieldLabel:"출원일",
+												name:"patent_date",
+												format:"Y-m-d",
+												value:moment().format("YYYY-MM-DD"),
+												width:200
+											}),
+											new Ext.form.TextField({
+												fieldLabel:"출원번호",
+												name:"patent_no",
+												flex:1
+											})
+										]
+									})
+								]
+							}),
+							new Ext.form.FieldSet({
 								id:"ModulePublicationArticleAddForm-BOOK",
 								title:"도서정보 입력",
 								disabled:true,
@@ -232,6 +413,62 @@ var Publication = {
 									new Ext.form.TextField({
 										fieldLabel:"도서링크",
 										name:"book_link",
+										allowBlank:true
+									})
+								]
+							}),
+							new Ext.form.FieldSet({
+								id:"ModulePublicationArticleAddForm-MEDIA",
+								title:"미디어 입력",
+								items:[
+									new Ext.form.TextField({
+										fieldLabel:"기사/방송명",
+										name:"media_title"
+									}),
+									new Ext.form.FieldContainer({
+										fieldLabel:"언론매체",
+										layout:"hbox",
+										items:[
+											new Ext.form.ComboBox({
+												name:"media_publisher",
+												store:new Ext.data.JsonStore({
+													proxy:{
+														type:"ajax",
+														url:ENV.getProcessUrl("publication","@getPublishers"),
+														extraParams:{type:"MEDIA"},
+														reader:{type:"json"}
+													},
+													autoLoad:true,
+													pageSize:0,
+													remoteSort:false,
+													sorters:[{property:"title",direction:"ASC"}],
+													fields:["idx","title"]
+												}),
+												flex:1,
+												autoLoadOnValue:true,
+												editable:false,
+												displayField:"title",
+												valueField:"idx"
+											}),
+											new Ext.Button({
+												iconCls:"mi mi-add",
+												text:"언론매체추가",
+												style:{marginLeft:"5px"},
+												handler:function() {
+													Publication.publisher.add("MEDIA");
+												}
+											})
+										]
+									}),
+									new Ext.form.DateField({
+										fieldLabel:"기사게시일",
+										name:"media_date",
+										format:"Y-m-d",
+										value:moment().format("YYYY-MM-DD")
+									}),
+									new Ext.form.TextField({
+										fieldLabel:"기사링크",
+										name:"media_link",
 										allowBlank:true
 									})
 								]
@@ -359,8 +596,27 @@ var Publication = {
 								]
 							}),
 							new Ext.form.FieldSet({
+								id:"ModulePublicationArticleAddAttachment",
 								title:"첨부파일",
 								items:[
+									new Ext.form.FieldContainer({
+										layout:{type:"vbox",align:"stretch"},
+										style:{marginBottom:0},
+										items:[
+											new Ext.form.FileUploadField({
+												name:"file",
+												buttonText:"첨부파일선택",
+												allowBlank:true,
+												style:{marginBottom:0}
+											}),
+											new Ext.form.Checkbox({
+												boxLabel:"첨부된 파일 삭제하기",
+												name:"file_delete",
+												hidden:true,
+												style:{marginBottom:0}
+											})
+										]
+									})
 								]
 							})
 						]
@@ -416,6 +672,11 @@ var Publication = {
 								success:function(form,action) {
 									var author = JSON.parse(form.findField("author").getValue());
 									Ext.getCmp("ModulePublicationArticleAddFormAuthorList").getStore().add(author);
+									
+									if (action.result.data.file != null) {
+										Ext.getCmp("ModulePublicationArticleAddForm").getForm().findField("file_delete").setBoxLabel(action.result.data.file.name+ "("+iModule.getFileSize(action.result.data.file.size)+") 삭제");
+										Ext.getCmp("ModulePublicationArticleAddForm").getForm().findField("file_delete").show();
+									}
 								},
 								failure:function(form,action) {
 									if (action.result && action.result.message) {
@@ -430,6 +691,31 @@ var Publication = {
 					}
 				}
 			}).show();
+		},
+		delete:function() {
+			var selected = Ext.getCmp("ModulePublicationArticleList").getSelectionModel().getSelection();
+			if (selected.length == 0) {
+				Ext.Msg.show({title:Admin.getText("alert/error"),msg:"삭제할 데이터를 선택하여 주십시오.",buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
+				return;
+			}
+			
+			var idxes = [];
+			for (var i=0, loop=selected.length;i<loop;i++) {
+				idxes.push(selected[i].get("idx"));
+			}
+			
+			Ext.Msg.show({title:Admin.getText("alert/info"),msg:"선택한 데이터를 정말 삭제하시겠습니까?",buttons:Ext.Msg.OKCANCEL,icon:Ext.Msg.QUESTION,fn:function(button) {
+				if (button == "ok") {
+					Ext.Msg.wait(Admin.getText("action/working"),Admin.getText("action/wait"));
+					$.send(ENV.getProcessUrl("publication","@deleteArticle"),{idx:idxes.join(",")},function(result) {
+						if (result.success == true) {
+							Ext.Msg.show({title:Admin.getText("alert/info"),msg:Admin.getText("action/worked"),buttons:Ext.Msg.OK,icon:Ext.Msg.INFO,fn:function() {
+								Ext.getCmp("ModulePublicationArticleList").getStore().reload();
+							}});
+						}
+					});
+				}
+			}});
 		}
 	},
 	/**
@@ -455,7 +741,7 @@ var Publication = {
 				data.sort = store.getCount();
 				store.add(data);
 			} else {
-				
+				store.getAt(index).set(data);
 			}
 			
 			if (Ext.getCmp("ModulePublicationAuthorSearchWindow")) Ext.getCmp("ModulePublicationAuthorSearchWindow").close();
@@ -556,7 +842,7 @@ var Publication = {
 							sorters:[{property:"idx",direction:"ASC"}],
 							autoLoad:true,
 							pageSize:50,
-							fields:["idx","name","author_name","email","count"],
+							fields:["idx","name","email","count"],
 							listeners:{
 								load:function(store,records,success,e) {
 									if (success == false) {
@@ -599,7 +885,7 @@ var Publication = {
 						}),
 						listeners:{
 							itemdblclick:function(grid,record) {
-								Publication.author.insert({midx:record.data.idx,name:record.data.name+"("+record.data.nickname+")"},index);
+								Publication.author.insert({midx:record.data.idx,name:record.data.name},index);
 							}
 						}
 					})
@@ -614,7 +900,7 @@ var Publication = {
 								Ext.Msg.show({title:Admin.getText("alert/error"),msg:"선택된 회원이 없습니다.",buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR})
 							} else {
 								var data = Ext.getCmp("ModulePublicationAuthorSearchList").getSelectionModel().getSelection().pop().data;
-								Publication.author.insert({midx:data.idx,name:data.name+"("+data.nickname+")"},index);
+								Publication.author.insert({midx:data.idx,name:data.name},index);
 							}
 						}
 					}),
@@ -797,10 +1083,6 @@ var Publication = {
 							new Ext.form.Hidden({
 								name:"idx"
 							}),
-							new Ext.form.TextField({
-								fieldLabel:"매체명",
-								name:"title"
-							}),
 							new Ext.form.ComboBox({
 								fieldLabel:"매체유형",
 								name:"type",
@@ -819,13 +1101,88 @@ var Publication = {
 								valueField:"value",
 								listeners:{
 									change:function(form,value) {
+										var title = {PAPER:"저널명",CONFERENCE:"컨퍼런스명",BOOK:"출판사명"};
+										
 										if (value == "PAPER") {
 											form.getForm().findField("isbn").show();
 										} else {
 											form.getForm().findField("isbn").hide();
 										}
+										
+										if (value == "CONFERENCE") {
+											form.getForm().findField("supervision").setDisabled(false).show();
+											form.getForm().findField("country").ownerCt.setDisabled(false).show();
+											form.getForm().findField("start_date").ownerCt.setDisabled(false).show();
+										} else {
+											form.getForm().findField("supervision").setDisabled(true).hide();
+											form.getForm().findField("country").ownerCt.setDisabled(true).hide();
+											form.getForm().findField("start_date").ownerCt.setDisabled(true).hide();
+										}
+										
+										form.getForm().findField("title").setFieldLabel(title[value] ? title[value] : "매체명");
 									}
 								}
+							}),
+							new Ext.form.TextField({
+								fieldLabel:"매체명",
+								name:"title"
+							}),
+							new Ext.form.TextField({
+								fieldLabel:"주관",
+								name:"supervision"
+							}),
+							new Ext.form.FieldContainer({
+								layout:"hbox",
+								fieldLabel:"개최국가/도시",
+								items:[
+									new Ext.form.ComboBox({
+										name:"country",
+										store:new Ext.data.ArrayStore({
+											fields:["display","value"],
+											data:(function() {
+												var datas = [];
+												for (var value in Publication.getText("country")) {
+													datas.push([Publication.getText("country/"+value),value]);
+												}
+												return datas;
+											})()
+										}),
+										displayField:"display",
+										valueField:"value",
+										flex:1
+									}),
+									new Ext.form.DisplayField({
+										value:"/",
+										width:40,
+										style:{textAlign:"center"}
+									}),
+									new Ext.form.TextField({
+										name:"city",
+										flex:1,
+										emptyText:"도시"
+									})
+								]
+							}),
+							new Ext.form.FieldContainer({
+								fieldLabel:"개최기간",
+								layout:"hbox",
+								items:[
+									new Ext.form.DateField({
+										name:"start_date",
+										format:"Y-m-d",
+										flex:1
+									}),
+									new Ext.form.DisplayField({
+										value:"~",
+										width:40,
+										style:{textAlign:"center"}
+									}),
+									new Ext.form.DateField({
+										name:"end_date",
+										format:"Y-m-d",
+										flex:1
+									})
+								]
 							}),
 							new Ext.form.TextField({
 								fieldLabel:"ISBN",
@@ -858,7 +1215,9 @@ var Publication = {
 										if (Ext.getCmp("ModulePublicationArticleAddForm")) {
 											var addForm = Ext.getCmp("ModulePublicationArticleAddForm").getForm();
 											addForm.findField("paper_publisher").getStore().reload();
+											addForm.findField("conference_publisher").getStore().reload();
 											addForm.findField("book_publisher").getStore().reload();
+											addForm.findField("media_publisher").getStore().reload();
 										}
 										Ext.getCmp("ModulePublicationPublisherAddWindow").close();
 									}});

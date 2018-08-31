@@ -26,7 +26,7 @@ $lists = $lists->orderBy($sort,$dir)->limit($start,$limit)->get();
 for ($i=0, $loop=count($lists);$i<$loop;$i++) {
 	$member = $mMember->getMember($lists[$i]->idx);
 	
-	$lists[$i]->name = $this->getAuthorName($member);
+	$lists[$i]->name = $member->name.'('.$this->getAuthorName($member).')';
 	$lists[$i]->email = $member->email;
 	$lists[$i]->count = $this->db()->select($this->table->author)->where('midx',$member->idx)->count();
 }

@@ -4,7 +4,7 @@
  *
  * 출판물관리모듈 기본템플릿 (목록보기)
  * 
- * @file /modules/publication/templets/default/list.paper.php
+ * @file /modules/publication/templets/default/list.media.php
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
  * @version 3.0.0
@@ -16,8 +16,8 @@ if (defined('__IM__') == false) exit;
 	<div>
 		<ul>
 			<li<?php echo $mode == 'year' ? ' class="selected"' : ''; ?>><a href="<?php echo $me->getUrl('list','year'); ?>">연도별</a></li>
-			<li<?php echo $mode == 'publisher' ? ' class="selected"' : ''; ?>><a href="<?php echo $me->getUrl('list','publisher'); ?>">저널별</a></li>
-			<li<?php echo $mode == 'author' ? ' class="selected"' : ''; ?>><a href="<?php echo $me->getUrl('list','author'); ?>">저자별</a></li>
+			<li<?php echo $mode == 'publisher' ? ' class="selected"' : ''; ?>><a href="<?php echo $me->getUrl('list','publisher'); ?>">언론매체별</a></li>
+			<li<?php echo $mode == 'author' ? ' class="selected"' : ''; ?>><a href="<?php echo $me->getUrl('list','author'); ?>">대상</a></li>
 		</ul>
 	</div>
 </div>
@@ -43,7 +43,7 @@ if (defined('__IM__') == false) exit;
 				
 				<?php if ($mode == 'publisher') { ?>
 				<li>
-					<label>저널명</label>
+					<label>언론매체명</label>
 					<div>
 						<div data-role="input" data-search="<?php echo $IM->getProcessUrl('publication','searchPublisher'); ?>?type=<?php echo $type; ?>">
 							<input type="search" name="publisher" placeholder="등록되어 있는 저널명이 자동검색됩니다." autocomplete="off" value="<?php echo $publisher != null ? $publisher->title : ''; ?>">
@@ -71,7 +71,7 @@ if (defined('__IM__') == false) exit;
 					<label>검색어</label>
 					<div>
 						<div data-role="input">
-							<input type="search" name="keyword" placeholder="논문명 / 개요 / 키워드" value="<?php echo GetString($keyword,'input'); ?>">
+							<input type="search" name="keyword" placeholder="기사명" value="<?php echo GetString($keyword,'input'); ?>">
 						</div>
 					</div>
 				</li>
@@ -127,7 +127,7 @@ if (defined('__IM__') == false) exit;
 		<div class="publisher">
 			<i class="xi xi-book-spread"></i>
 			<a href="<?php echo $me->getUrl('list','publisher/'.$item->publisher->idx); ?>"><?php echo $item->publisher->title; ?></a>,
-			<?php echo $item->volume_no; ?><?php if ($item->issue_no > 0) { ?> (<?php echo $item->issue_no; ?>)<?php } ?>, <?php echo $item->page_no; ?> (<a href="<?php echo $me->getUrl('list','year/'.$item->year); ?>"><?php echo $item->year; ?></a>)
+			<?php echo date('F d, Y',strtotime($item->page_no)); ?> (<a href="<?php echo $me->getUrl('list','year/'.$item->year); ?>"><?php echo $item->year; ?></a>)
 		</div>
 	</li>
 	<?php } ?>

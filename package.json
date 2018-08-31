@@ -107,6 +107,11 @@
 				"link":{
 					"type":"varchar",
 					"length":255
+				},
+				"file":{
+					"type":"int",
+					"length":11,
+					"default":0
 				}
 			},
 			"indexes":{
@@ -184,7 +189,30 @@
 				},
 				"search":{
 					"type":"varchar",
-					"length":100
+					"length":255
+				},
+				"supervision":{
+					"type":"varchar",
+					"length":100,
+					"is_null":true
+				},
+				"country":{
+					"type":"int",
+					"length":11,
+					"default":0
+				},
+				"city":{
+					"type":"varchar",
+					"length":20,
+					"is_null":true
+				},
+				"start_date":{
+					"type":"date",
+					"is_null":true
+				},
+				"end_date":{
+					"type":"date",
+					"is_null":true
 				},
 				"isbn":{
 					"type":"varchar",
@@ -193,7 +221,8 @@
 				},
 				"link":{
 					"type":"varchar",
-					"length":255
+					"length":255,
+					"default":""
 				}
 			},
 			"indexes":{

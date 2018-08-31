@@ -14,11 +14,21 @@ if (defined('__IM__') == false) exit;
 
 $idx = Request('idx');
 $category = Request('category') ? $this->getCategory(Request('category')) : null;
-
 if ($category == null) {
 	$results->success = false;
 	$results->errors = array('category'=>$this->getErrorText('NOT_FOUND'));
 	return;
+}
+if ($idx) {
+	$data = $this->db()->select($this->table->article)->where('idx',$idx)->getOne();
+	if ($data == null) {
+		$results->success = false;
+		$results->message = $this->getErrorText('NOT_FOUND');
+		return;
+	}
+	$fileIdx = $data->file;
+} else {
+	$fileIdx = 0;
 }
 
 $errors = array();
@@ -34,6 +44,44 @@ if ($category->type == 'PAPER') {
 	$keyword = Request('paper_keyword');
 }
 
+if ($category->type == 'THESIS') {
+	$title = Request('thesis_title') ? Request('thesis_title') : $errors['thesis_title'] = $this->getErrorText('REQUIRED');
+	$publisher = 0;
+	$year = Request('thesis_year') && is_numeric(Request('thesis_year')) == true ? Request('thesis_year') : $errors['thesis_year'] = $this->getErrorText('REQUIRED');
+	$volume_no = Request('thesis_month') && is_numeric(Request('thesis_month')) == true ? Request('thesis_month') : $errors['thesis_month'] = $this->getErrorText('REQUIRED');
+	$issue_no = 0;
+	$page_no = Request('thesis_type') ? Request('thesis_type') : $errors['thesis_type'] = $this->getErrorText('REQUIRED');
+	$abstract = '';
+	$link = '';
+	$keyword = '';
+}
+
+if ($category->type == 'CONFERENCE') {
+	$title = Request('conference_title') ? Request('conference_title') : $errors['conference_title'] = $this->getErrorText('REQUIRED');
+	$publisher = Request('conference_publisher') ? Request('conference_publisher') : $errors['conference_publisher'] = $this->getErrorText('REQUIRED');
+	
+	$check = $this->getPublisher($publisher);
+	$year = date('Y',strtotime($check->start_date));
+	$volume_no = strtotime($check->start_date);
+	$issue_no = strtotime($check->end_date);
+	$page_no = Request('conference_type') ? Request('conference_type') : $errors['conference_type'] = $this->getErrorText('REQUIRED');
+	$abstract = '';
+	$link = '';
+	$keyword = '';
+}
+
+if ($category->type == 'PATENT') {
+	$title = Request('patent_title') ? Request('patent_title') : $errors['patent_title'] = $this->getErrorText('REQUIRED');
+	$publisher = 0;
+	$volume_no = Request('patent_type') ? Request('patent_type') : $errors['patent_type'] = $this->getErrorText('REQUIRED');
+	$page_no = Request('patent_date') ? Request('patent_date') : $errors['patent_date'] = $this->getErrorText('REQUIRED');
+	$issue_no = 0;
+	$year = date('Y',strtotime($page_no));
+	$abstract = '';
+	$link = '';
+	$keyword = Request('patent_no') ? Request('patent_no') : $errors['patent_no'] = $this->getErrorText('REQUIRED');
+}
+
 if ($category->type == 'BOOK') {
 	$title = Request('book_title') ? Request('book_title') : $errors['book_title'] = $this->getErrorText('REQUIRED');
 	$publisher = Request('book_publisher') ? Request('book_publisher') : $errors['book_publisher'] = $this->getErrorText('REQUIRED');
@@ -43,6 +91,18 @@ if ($category->type == 'BOOK') {
 	$page_no = Request('book_page_no') ? Request('book_page_no') : $errors['book_page_no'] = $this->getErrorText('REQUIRED');
 	$abstract = Request('book_abstract') ? Request('book_abstract') : $errors['book_abstract'] = $this->getErrorText('REQUIRED');
 	$link = Request('book_link');
+	$keyword = '';
+}
+
+if ($category->type == 'MEDIA') {
+	$title = Request('media_title') ? Request('media_title') : $errors['media_title'] = $this->getErrorText('REQUIRED');
+	$publisher = Request('media_publisher') ? Request('media_publisher') : $errors['media_publisher'] = $this->getErrorText('REQUIRED');
+	$page_no = Request('media_date') ? Request('media_date') : $errors['media_date'] = $this->getErrorText('REQUIRED');
+	$year = date('Y',strtotime($page_no));
+	$volume_no = 0;
+	$issue_no = 0;
+	$abstract = '';
+	$link = Request('media_link');
 	$keyword = '';
 }
 
@@ -94,9 +154,26 @@ if (count($errors) == 0) {
 	$remove->execute();
 	
 	$remove = $this->db()->delete($this->table->author)->where('aidx',$idx);
-	if (count($author_names) > 0) $remove->where('midx',0)->where('midx',$author_names,'NOT IN');
+	if (count($author_names) > 0) $remove->where('midx',0)->where('name',$author_names,'NOT IN');
 	else $remove->where('midx',0);
 	$remove->execute();
+	
+	if ($fileIdx > 0 && Request('file_delete')) {
+		$this->IM->getModule('attachment')->fileDelete($fileIdx);
+		$fileIdx = 0;
+	}
+	
+	if (isset($_FILES['file']) == true && $_FILES['file']['tmp_name']) {
+		if ($fileIdx == 0) {
+			$fileIdx = $this->IM->getModule('attachment')->fileSave($_FILES['file']['name'],$_FILES['file']['tmp_name'],'publication','article','PUBLISHED',true);
+		} else {
+			$fileIdx = $this->IM->getModule('attachment')->fileReplace($imageIdx,$_FILES['file']['name'],$_FILES['file']['tmp_name'],true);
+		}
+	}
+	
+	if ($fileIdx !== false) {
+		$this->db()->update($this->table->article,array('file'=>$fileIdx))->where('idx',$idx)->execute();
+	}
 	
 	$results->success = true;
 } else {

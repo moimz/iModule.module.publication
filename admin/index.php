@@ -34,11 +34,16 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 								reader:{type:"json"}
 							},
 							remoteSort:false,
+							sorters:[{property:"sort",direction:"ASC"}],
 							fields:["idx","title"]
 						}),
 						width:140,
 						autoLoadOnValue:true,
 						editable:false,
+						matchFieldWidth:false,
+						listConfig:{
+							minWidth:140
+						},
 						displayField:"title",
 						valueField:"idx",
 						value:"",
@@ -85,7 +90,7 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 						reader:{type:"json"}
 					},
 					remoteSort:false,
-					sorters:[{property:"sort",direction:"ASC"}],
+					sorters:[{property:"year",direction:"DESC"}],
 					autoLoad:true,
 					pageSize:50,
 					fields:["idx","type","title",{name:"article",type:"int"},{name:"sort",type:"int"}],
@@ -105,7 +110,16 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 					text:"출판물명",
 					minWidth:150,
 					flex:1,
-					dataIndex:"title"
+					dataIndex:"title",
+					sortable:true,
+					renderer:function(value,p,record) {
+						var sHTML = "";
+						if (record.data.file != null) {
+							sHTML+= '<i style="display:inline-block; width:16px; height:16px; background:url('+record.data.file.icon+') no-repeat 0 50%; vertical-align:middle; float:left; background-size:contain; margin-right:5px;"></i>';
+						}
+						sHTML+= value;
+						return sHTML;
+					}
 				},{
 					text:"카테고리(유형)",
 					width:180,
@@ -124,7 +138,8 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 				},{
 					text:"연도",
 					width:60,
-					dataIndex:"year"
+					dataIndex:"year",
+					sortable:true
 				},{
 					text:"매체코드",
 					width:180,
@@ -389,7 +404,14 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 					text:"매체명",
 					minWidth:150,
 					flex:1,
-					dataIndex:"title"
+					dataIndex:"title",
+					renderer:function(value,p,record) {
+						if (record.data.type == "CONFERENCE") {
+							return value + "(" + moment(record.data.start_date).locale("ko").format("YYYY.MM.DD(dd)") + " ~ " + moment(record.data.end_date).locale("ko").format("YYYY.MM.DD(dd)") + " / " + record.data.city + ", " + Publication.getText("country/"+record.data.country)+")";
+						} else {
+							return value;
+						}
+					}
 				},{
 					text:"등록수",
 					width:100,

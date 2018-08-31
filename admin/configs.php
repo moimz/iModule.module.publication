@@ -63,21 +63,12 @@ new Ext.form.Panel({
 						},
 						autoLoad:true,
 						remoteSort:false,
-						fields:["name","title"],
-						listeners:{
-							load:function(store) {
-								var value = Ext.getCmp("ModuleConfigForm").getForm().findField("author_name").getValue();
-								if (store.findExact("name",value) == -1) {
-									Ext.getCmp("ModuleConfigForm").getForm().findField("author_name").setValue("nickname");
-								}
-							}
-						}
+						fields:["name","title"]
 					}),
 					autoLoadOnValue:true,
 					editable:false,
 					displayField:"title",
 					valueField:"name",
-					value:"nickname",
 					afterBodyEl:'<div class="x-form-help">저자명으로 표시할 회원정보필드를 선택하여 주십시오.</div>'
 				})
 			]

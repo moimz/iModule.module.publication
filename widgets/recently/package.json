@@ -1,0 +1,45 @@
+{
+	"title":{
+		"ko":"출판물 최근항목"
+	},
+	"version":"3.0.0",
+	"description":{
+		"ko":"출판물모듈의 최근 항목을 가져옵니다."
+	},
+	"author":{
+		"name":"Arzz",
+		"email":"arzz@arzz.com"
+	},
+	"homepage":"https://www.imodule.kr",
+	"dependencies":{
+		"core":"3.0.0",
+		"coursemos":"3.0.0"
+	},
+	"language":"ko",
+	"configs":{
+		"category":{
+			"title":{
+				"ko":"카테고리"
+			},
+			"type":"array",
+			"default":[],
+			"is_required":false
+		},
+		"count":{
+			"title":{
+				"ko":"가져올 게시물 갯수"
+			},
+			"type":"int",
+			"default":"5",
+			"is_required":true
+		},
+		"cache":{
+			"title":{
+				"ko":"캐시유지시간(초)"
+			},
+			"type":"int",
+			"default":300,
+			"is_required":false
+		}
+	}
+}

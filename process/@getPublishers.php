@@ -32,7 +32,7 @@ if ($limit) {
 }
 
 for ($i=0, $loop=count($lists);$i<$loop;$i++) {
-	$lists[$i]->article = $this->db()->select($this->table->article)->where('category',$lists[$i]->idx)->count();
+	$lists[$i]->article = $this->db()->select($this->table->article)->where('publisher',$lists[$i]->idx)->count();
 }
 
 $results->success = true;

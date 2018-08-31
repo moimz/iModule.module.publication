@@ -21,7 +21,7 @@ $keyword = Request('keyword');
 
 $lists = $this->db()->select($this->table->article);
 if ($type) $lists->where('type',$type);
-//if ($keyword) $lists->where('title','%'.$keyword.'%','LIKE');
+if ($keyword) $lists->where('title','%'.$keyword.'%','LIKE');
 
 $total = $lists->copy()->count();
 $lists = $lists->orderBy($sort,$dir)->orderBy('idx','desc')->limit($start,$limit)->get();
@@ -35,7 +35,7 @@ for ($i=0, $loop=count($lists);$i<$loop;$i++) {
 	
 	if ($authors[0]->midx > 0) {
 		$member = $this->IM->getModule('member')->getMember($authors[0]->midx);
-		$lists[$i]->author = $member->name.'('.$member->nickname.')';
+		$lists[$i]->author = $member->name.'('.$this->getAuthorName($member).')';
 	} else {
 		$lists[$i]->author = $authors[0]->name;
 	}
@@ -43,18 +43,33 @@ for ($i=0, $loop=count($lists);$i<$loop;$i++) {
 		$lists[$i]->author.= ' 외 '.(count($authors) - 1).'명';
 	}
 	
-	$publisher = $this->getPublisher($lists[$i]->publisher);
-	$lists[$i]->publisher = $publisher->title;
-	if ($publisher->type == 'PAPER') {
+	if ($lists[$i]->publisher > 0) {
+		$publisher = $this->getPublisher($lists[$i]->publisher);
+		$lists[$i]->publisher = $publisher->title;
+	} else {
+		$lists[$i]->publisher = '';
+	}
+	
+	if ($category->type == 'PAPER') {
 		$lists[$i]->publisher_code = $lists[$i]->volume_no.'권 '.$lists[$i]->issue_no.'호, P.'.$lists[$i]->page_no;
 	}
 	
-	if ($publisher->type == 'BOOK') {
+	if ($category->type == 'PATENT') {
+		$lists[$i]->publisher_code = ($lists[$i]->volume_no == 1 ? '출원번호' : '등록번호').' : '.$lists[$i]->keyword;
+	}
+	
+	if ($category->type == 'CONFERENCE') {
+		$lists[$i]->publisher_code = $publisher->city.', '.$this->getText('country/'.$publisher->country);
+	}
+	
+	if ($category->type == 'BOOK') {
 		$lists[$i]->publisher_code = 'ISBN '.$lists[$i]->page_no;
 	}
+	
+	$lists[$i]->file = $lists[$i]->file == 0 ? null : $this->IM->getModule('attachment')->getFileInfo($lists[$i]->file);
 }
 
 $results->success = true;
 $results->lists = $lists;
-$results->total = count($lists);
+$results->total = $total;
 ?>

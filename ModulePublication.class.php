@@ -546,13 +546,13 @@ class ModulePublication {
 		if ($publisher != null) $lists->where('p.publisher',$publisher->idx);
 		if ($author != null) $lists->join($this->table->author.' a','a.aidx=p.idx','LEFT')->where('a.midx',$author->idx);
 		$total = $lists->copy()->count();
-		
-		$lists = $lists->limit($start,$limit)->get();
+		$lists = $lists->limit($start,$limit)->orderBy('year','desc')->orderBy('idx','desc')->get();
 		for ($i=0, $loop=count($lists);$i<$loop;$i++) {
 			$lists[$i]->loopnum = $total - ($p - 1) * $limit - $i;
 			
 			$lists[$i]->author = $this->db()->select($this->table->author)->where('aidx',$lists[$i]->idx)->orderBy('sort','asc')->get();
 			$lists[$i]->publisher = $this->getPublisher($lists[$i]->publisher);
+			$lists[$i]->file = $lists[$i]->file == 0 ? null : $this->IM->getModule('attachment')->getFileInfo($lists[$i]->file);
 		}
 		
 		$pagination = $this->getTemplet()->getPagination($p,ceil($total/$limit),10,$this->getUrl('list',$mode.'/'.$code.'/{PAGE}',false));
@@ -642,6 +642,21 @@ class ModulePublication {
 		$this->IM->fireEvent('afterDoProcess',$this->getModule()->getName(),$action,$values,$results);
 		
 		return $results;
+	}
+	
+	/**
+	 * 첨부파일을 동기화한다.
+	 *
+	 * @param string $action 동기화작업
+	 * @param int $idx 파일 고유번호
+	 */
+	function syncAttachment($action,$idx) {
+		/**
+		 * 첨부파일 삭제
+		 */
+		if ($action == 'delete') {
+			$this->db()->update($this->table->article,array('file'=>0))->where('file',$idx)->execute();
+		}
 	}
 }
 ?>
