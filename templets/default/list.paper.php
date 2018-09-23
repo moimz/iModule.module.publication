@@ -116,6 +116,7 @@ if (defined('__IM__') == false) exit;
 		<small><?php echo $item->loopnum; ?>.</small>
 		<b><?php echo $item->title; ?><?php echo $item->link ? '<a href="'.$item->link.'" target="_blank"><i class="xi xi-external-link"></i></a>' : ''; ?><?php echo $item->file != null ? '<a href="'.$item->file->download.'" download="'.$item->file->name.'"><i class="icon" style="background-image:url('.$item->file->icon.');">'.$item->file->name.'</i></a>' : ''; ?></b>
 		
+		<?php if (count($item->author) > 0) { ?>
 		<div class="author">
 			<i class="xi xi-users"></i>
 			<?php foreach ($item->author as $member) { ?>
@@ -123,6 +124,7 @@ if (defined('__IM__') == false) exit;
 				<?php if ($member->midx > 0) { $member = $IM->getModule('member')->getMember($member->midx); ?><span><a href="<?php echo $me->getUrl('list','author/'.$member->idx); ?>"><i class="photo" style="background-image:url(<?php echo $member->photo; ?>);"></i><?php echo $me->getAuthorName($member); ?></a></span><?php } ?>
 			<?php } ?>
 		</div>
+		<?php } ?>
 		
 		<div class="publisher">
 			<i class="xi xi-book-spread"></i>

@@ -109,7 +109,7 @@ if (defined('__IM__') == false) exit;
 
 <h4>Total Results : <?php echo number_format($total); ?></h4>
 
-<ul data-role="list">
+<ul data-role="list" class="book">
 	<?php foreach ($lists as $item) { ?>
 	<li class="cover">
 		<div class="cover" style="background-image:url(<?php echo $item->file == null ? $Templet->getDir().'/images/nobook.png' : $item->file->thumbnail; ?>);"></div>

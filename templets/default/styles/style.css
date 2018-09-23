@@ -49,6 +49,7 @@ div[data-module=publication] ul[data-role=list] > li:nth-child(even) {background
 
 div[data-module=publication] ul[data-role=list] > li > small {font-size:12px; color:#666; height:20px; line-height:20px; display:block;}
 div[data-module=publication] ul[data-role=list] > li > b {display:block; font-size:16px; line-height:24px; margin-bottom:15px;}
+div[data-module=publication] ul[data-role=list].book > li > b {min-height:48px;}
 div[data-module=publication] ul[data-role=list] > li > b > a {text-decoration:none; color:#2196F3; margin-left:5px;}
 div[data-module=publication] ul[data-role=list] > li > b > a > i.icon {font-size:0; display:inline-block; width:20px; height:20px; vertical-align:top; margin:2px 0px; line-height:1; background-size:contain; background-repeat:no-repeat; background-position:0 50%; text-decoration:none;}
 div[data-module=publication] ul[data-role=list] > li > b > label {display:inline-block; line-height:24px; padding:0px 8px; background:#F44336; color:#fff; border-radius:3px; float:left; margin-right:10px;}
