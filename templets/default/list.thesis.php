@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 출판물관리모듈 기본템플릿 (목록보기)
  * 
@@ -91,7 +91,7 @@ if (defined('__IM__') == false) exit;
 	<?php foreach ($lists as $item) { ?>
 	<li>
 		<small><?php echo $item->loopnum; ?>.</small>
-		<b><?php echo $item->title; ?><?php echo $item->file != null ? '<a href="'.$item->file->download.'" download="'.$item->file->name.'"><i class="icon" style="background-image:url('.$item->file->icon.');">'.$item->file->name.'</i></a>' : ''; ?></b>
+		<b><label data-role="<?php echo $item->page_no; ?>"><?php echo $item->page_no; ?></label><?php echo $item->title; ?><?php echo $item->file != null ? '<a href="'.$item->file->download.'" download="'.$item->file->name.'"><i class="icon" style="background-image:url('.$item->file->icon.');">'.$item->file->name.'</i></a>' : ''; ?></b>
 		
 		<div class="author">
 			<i class="xi xi-users"></i>

@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 유형별 매체를 저장한다.
  * 
@@ -25,7 +25,7 @@ if ($type == 'CONFERENCE') {
 	$city = Request('city') ? Request('city') : $errors['type'] = $this->getErrorText('REQUIRED');
 	$start_date = Request('start_date') ? Request('start_date') : $errors['start_date'] = $this->getErrorText('REQUIRED');
 	$end_date = Request('end_date') ? Request('end_date') : $errors['end_date'] = $this->getErrorText('REQUIRED');
-	$supervision = Request('supervision') ? Request('supervision') : $errors['supervision'] = $this->getErrorText('REQUIRED');
+	$supervision = Request('supervision') ? Request('supervision') : '';
 }
 
 if (count($errors) == 0) {

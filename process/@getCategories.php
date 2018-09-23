@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 카테고리 목록을 가져온다.
  * 

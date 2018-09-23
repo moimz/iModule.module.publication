@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 출판물 관리와 관련된 모든 기능을 제어한다.
  * 

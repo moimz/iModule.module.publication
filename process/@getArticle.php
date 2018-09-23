@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 출판물 정보를 가져온다.
  * 
@@ -107,6 +107,9 @@ if ($category->type == 'BOOK') {
 	
 	$data->book_link = $data->link;
 	unset($data->link);
+	
+	$data->book_keyword = $data->keyword;
+	unset($data->keyword);
 }
 
 if ($category->type == 'MEDIA') {

@@ -1,5 +1,5 @@
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 출판물관리 UI 이벤트를 정의한다.
  * 

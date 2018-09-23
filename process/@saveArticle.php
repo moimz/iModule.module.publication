@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 출판물을 저장한다.
  * 
@@ -88,10 +88,10 @@ if ($category->type == 'BOOK') {
 	$year = Request('book_year') && is_numeric(Request('book_year')) == true ? Request('book_year') : $errors['book_year'] = $this->getErrorText('REQUIRED');
 	$volume_no = 0;
 	$issue_no = 0;
-	$page_no = Request('book_page_no') ? Request('book_page_no') : $errors['book_page_no'] = $this->getErrorText('REQUIRED');
+	$page_no = Request('book_page_no') ? Request('book_page_no') : '';
 	$abstract = Request('book_abstract') ? Request('book_abstract') : $errors['book_abstract'] = $this->getErrorText('REQUIRED');
 	$link = Request('book_link');
-	$keyword = '';
+	$keyword = Request('book_keyword') ? Request('book_keyword') : $errors['book_keyword'] = $this->getErrorText('REQUIRED');
 }
 
 if ($category->type == 'MEDIA') {
@@ -116,9 +116,7 @@ $keyword = implode(';',$keywords);
 $author = json_decode(Request('author'));
 
 if ($author == null || count($author) == 0) {
-	$results->success = false;
-	$results->message = '저자를 한명이상 입력하여 주십시오.';
-	return;
+	$author = array();
 }
 
 if (count($errors) == 0) {

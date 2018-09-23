@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 출판물관리모듈의 관리자 UI 를 구성한다.
  * 
@@ -127,6 +127,10 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 					renderer:function(value,p,record) {
 						return value+"("+Publication.getText("type/"+record.data.type)+")";
 					}
+				},{
+					text:"페이지",
+					width:100,
+					dataIndex:"page"
 				},{
 					text:"저자",
 					width:200,

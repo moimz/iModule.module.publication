@@ -1,5 +1,5 @@
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 출판물관리모듈 기본템플릿 스타일시트
  * 
@@ -52,7 +52,8 @@ div[data-module=publication] ul[data-role=list] > li > b {display:block; font-si
 div[data-module=publication] ul[data-role=list] > li > b > a {text-decoration:none; color:#2196F3; margin-left:5px;}
 div[data-module=publication] ul[data-role=list] > li > b > a > i.icon {font-size:0; display:inline-block; width:20px; height:20px; vertical-align:top; margin:2px 0px; line-height:1; background-size:contain; background-repeat:no-repeat; background-position:0 50%; text-decoration:none;}
 div[data-module=publication] ul[data-role=list] > li > b > label {display:inline-block; line-height:24px; padding:0px 8px; background:#F44336; color:#fff; border-radius:3px; float:left; margin-right:10px;}
-div[data-module=publication] ul[data-role=list] > li > div.author {padding:5px 0px; font-size:14px; font-size:0; position:relative; padding-left:20px;}
+div[data-module=publication] ul[data-role=list] > li > b > label[data-role=MS] {background:#2196F3;}
+div[data-module=publication] ul[data-role=list] > li > div.author {min-height:24px; padding:5px 0px; font-size:14px; font-size:0; position:relative; padding-left:20px;}
 div[data-module=publication] ul[data-role=list] > li > div.author > i {width:20px; height:24px; font-size:14px; line-height:24px; vertical-align:middle; color:#666; position:absolute; top:5px; left:0;}
 div[data-module=publication] ul[data-role=list] > li > div.author > span {padding:0px 5px; display:inline-block; vertical-align:middle; height:24px; font-size:14px;}
 div[data-module=publication] ul[data-role=list] > li > div.author > span:after {content:", ";}

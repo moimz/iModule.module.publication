@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 출판물관리모듈 기본템플릿 (목록보기)
  * 
@@ -118,17 +118,20 @@ if (defined('__IM__') == false) exit;
 		<b><?php echo $item->title; ?><?php echo $item->link ? '<a href="'.$item->link.'" target="_blank"><i class="xi xi-external-link"></i></a>' : ''; ?><?php echo $item->file != null ? '<a href="'.$item->file->download.'" download="'.$item->file->name.'"><i class="icon" style="background-image:url('.$item->file->icon.');">'.$item->file->name.'</i></a>' : ''; ?></b>
 		
 		<div class="author">
+			<?php if (count($item->author) > 0) { ?>
 			<i class="xi xi-users"></i>
 			<?php foreach ($item->author as $member) { ?>
 				<?php if ($member->midx == 0) { ?><span><span><?php echo $member->name; ?></span></span><?php } ?>
 				<?php if ($member->midx > 0) { $member = $IM->getModule('member')->getMember($member->midx); ?><span><a href="<?php echo $me->getUrl('list','author/'.$member->idx); ?>"><i class="photo" style="background-image:url(<?php echo $member->photo; ?>);"></i><?php echo $me->getAuthorName($member); ?></a></span><?php } ?>
+			<?php } ?>
 			<?php } ?>
 		</div>
 		
 		<div class="publisher">
 			<i class="xi xi-book-spread"></i>
 			<a href="<?php echo $me->getUrl('list','publisher/'.$item->publisher->idx); ?>"><?php echo $item->publisher->title; ?></a>,
-			ISBN : <?php echo $item->page_no; ?> (<a href="<?php echo $me->getUrl('list','year/'.$item->year); ?>"><?php echo $item->year; ?></a>)
+			<?php echo strpos($item->page_no,'-') !== false ? 'pp. '.$item->page_no : 'p. '.$item->page_no; ?>,
+			ISBN : <?php echo $item->keyword; ?> (<a href="<?php echo $me->getUrl('list','year/'.$item->year); ?>"><?php echo $item->year; ?></a>)
 		</div>
 	</li>
 	<?php } ?>

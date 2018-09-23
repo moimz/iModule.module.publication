@@ -1,5 +1,5 @@
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 출판물관리모듈의 관리자 UI 를 구성한다.
  * 
@@ -399,9 +399,15 @@ var Publication = {
 												flex:1
 											}),
 											new Ext.form.TextField({
-												fieldLabel:"ISBN",
+												fieldLabel:"페이지",
 												name:"book_page_no",
-												flex:3
+												allowBlank:true,
+												flex:1
+											}),
+											new Ext.form.TextField({
+												fieldLabel:"ISBN",
+												name:"book_keyword",
+												flex:2
 											})
 										]
 									}),
@@ -1129,7 +1135,8 @@ var Publication = {
 							}),
 							new Ext.form.TextField({
 								fieldLabel:"주관",
-								name:"supervision"
+								name:"supervision",
+								allowBlank:true
 							}),
 							new Ext.form.FieldContainer({
 								layout:"hbox",
@@ -1159,7 +1166,8 @@ var Publication = {
 									new Ext.form.TextField({
 										name:"city",
 										flex:1,
-										emptyText:"도시"
+										emptyText:"도시",
+										allowBlank:true
 									})
 								]
 							}),

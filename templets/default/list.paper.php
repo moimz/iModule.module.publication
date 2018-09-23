@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 출판물관리모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 출판물관리모듈의 일부입니다. (https://www.imodules.io)
  *
  * 출판물관리모듈 기본템플릿 (목록보기)
  * 
@@ -127,7 +127,7 @@ if (defined('__IM__') == false) exit;
 		<div class="publisher">
 			<i class="xi xi-book-spread"></i>
 			<a href="<?php echo $me->getUrl('list','publisher/'.$item->publisher->idx); ?>"><?php echo $item->publisher->title; ?></a>,
-			<?php echo $item->volume_no; ?><?php if ($item->issue_no > 0) { ?> (<?php echo $item->issue_no; ?>)<?php } ?>, <?php echo $item->page_no; ?> (<a href="<?php echo $me->getUrl('list','year/'.$item->year); ?>"><?php echo $item->year; ?></a>)
+			<?php echo $item->volume_no; ?><?php if ($item->issue_no > 0) { ?> (<?php echo $item->issue_no; ?>)<?php } ?>, <?php echo strpos($item->page_no,'-') !== false ? 'pp. '.$item->page_no : 'p. '.$item->page_no; ?>, (<a href="<?php echo $me->getUrl('list','year/'.$item->year); ?>"><?php echo $item->year; ?></a>)
 		</div>
 	</li>
 	<?php } ?>
