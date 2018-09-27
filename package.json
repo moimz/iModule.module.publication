@@ -34,6 +34,10 @@
 		"author_name":{
 			"type":"string",
 			"default":"nickname"
+		},
+		"author_photo":{
+			"type":"boolean",
+			"default":true
 		}
 	},
 	"targets":{

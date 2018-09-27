@@ -8,7 +8,7 @@
  * @author Arzz (arzz@arzz.com)
  * @license GPLv3
  * @version 3.0.0
- * @modified 2018. 3. 18.
+ * @modified 2018. 9. 27.
  */
 if (defined('__IM__') == false) exit;
 ?>
@@ -70,6 +70,12 @@ new Ext.form.Panel({
 					displayField:"title",
 					valueField:"name",
 					afterBodyEl:'<div class="x-form-help">저자명으로 표시할 회원정보필드를 선택하여 주십시오.</div>'
+				}),
+				new Ext.form.Checkbox({
+					fieldLabel:"저자사진",
+					name:"author_photo",
+					uncheckedValue:"",
+					boxLabel:"목록페이지에서 저자가 회원인 경우 회원사진을 표시합니다."
 				})
 			]
 		})

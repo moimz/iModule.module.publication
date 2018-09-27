@@ -98,7 +98,7 @@ if (defined('__IM__') == false) exit;
 			<i class="xi xi-users"></i>
 			<?php foreach ($item->author as $member) { ?>
 				<?php if ($member->midx == 0) { ?><span><span><?php echo $member->name; ?></span></span><?php } ?>
-				<?php if ($member->midx > 0) { $member = $IM->getModule('member')->getMember($member->midx); ?><span><a href="<?php echo $me->getUrl('list','author/'.$member->idx); ?>"><i class="photo" style="background-image:url(<?php echo $member->photo; ?>);"></i><?php echo $me->getAuthorName($member); ?></a></span><?php } ?>
+				<?php if ($member->midx > 0) { $member = $IM->getModule('member')->getMember($member->midx); ?><span><a href="<?php echo $me->getUrl('list','author/'.$member->idx); ?>"><?php echo $me->getModule()->getConfig('author_photo') == true ? '<i class="photo" style="background-image:url('.$member->photo.');"></i>' : ''; ?><?php echo $me->getAuthorName($member); ?></a></span><?php } ?>
 			<?php } ?>
 		</div>
 		<?php } ?>

@@ -8,7 +8,7 @@
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
  * @version 3.0.0
- * @modified 2018. 5. 11.
+ * @modified 2018. 9. 27.
  */
 class ModulePublication {
 	/**
