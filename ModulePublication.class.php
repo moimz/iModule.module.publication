@@ -512,6 +512,8 @@ class ModulePublication {
 		$publisher = Request('publisher');
 		$author = Request('author');
 		$keyword = Request('keyword');
+		$page_no = Request('page_no');
+		$volume_no = Request('volume_no');
 		
 		if ($mode == 'year') {
 			$selectors = $this->db()->select($this->table->article,'year, count(year) as count')->where('category',$category->idx)->groupBy('year')->orderBy('year','desc')->get();
@@ -545,6 +547,8 @@ class ModulePublication {
 		if ($year != null) $lists->where('p.year',$year);
 		if ($publisher != null) $lists->where('p.publisher',$publisher->idx);
 		if ($author != null) $lists->join($this->table->author.' a','a.aidx=p.idx','LEFT')->where('a.midx',$author->idx);
+		if ($page_no != null) $lists->where('p.page_no',$page_no);
+		if ($volume_no != null) $lists->where('p.volume_no',$volume_no);
 		$total = $lists->copy()->count();
 		$lists = $lists->limit($start,$limit)->orderBy('year','desc')->orderBy('idx','desc')->get();
 		for ($i=0, $loop=count($lists);$i<$loop;$i++) {

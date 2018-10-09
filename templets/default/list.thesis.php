@@ -31,6 +31,7 @@ if (defined('__IM__') == false) exit;
 					<div>
 						<div data-role="input">
 							<select name="code">
+								<option value="">전체</option>
 								<?php foreach ($selectors as $selector) { ?>
 								<option value="<?php echo $selector->year; ?>"<?php echo $code == $selector->year ? ' selected="selected"' : ''; ?>><?php echo $selector->year.'년도 ('.number_format($selector->count).'건)'; ?></option>
 								<?php } ?>
@@ -46,6 +47,7 @@ if (defined('__IM__') == false) exit;
 					<div>
 						<div data-role="input">
 							<select name="code">
+								<option value="">전체</option>
 								<?php foreach ($selectors as $selector) { ?>
 								<option value="<?php echo $selector->idx; ?>"<?php echo $code == $selector->idx ? ' selected="selected"' : ''; ?>><?php echo $me->getAuthorName($IM->getModule('member')->getMember($selector->idx)).' ('.number_format($selector->count).'건)'; ?></option>
 								<?php } ?>
@@ -55,6 +57,18 @@ if (defined('__IM__') == false) exit;
 				</li>
 				<?php } ?>
 				
+				<li>
+					<label>구분</label>
+					<div>
+						<div data-role="input">
+							<select name="page_no">
+								<option value="">전체</option>
+								<option value="Ph.D"<?php echo $page_no == 'Ph.D' ? ' selected="selected"' : ''; ?>>Ph.D</option>
+								<option value="MS"<?php echo $page_no == 'MS' ? ' selected="selected"' : ''; ?>>MS</option>
+							</select>
+						</div>
+					</div>
+				</li>
 				<li>
 					<label>검색어</label>
 					<div>

@@ -59,7 +59,7 @@ div[data-module=publication] ul[data-role=list] > li > div.author > i {width:20p
 div[data-module=publication] ul[data-role=list] > li > div.author > span {padding:0px 5px; display:inline-block; vertical-align:middle; height:24px; font-size:14px;}
 div[data-module=publication] ul[data-role=list] > li > div.author > span:after {content:", ";}
 div[data-module=publication] ul[data-role=list] > li > div.author > span:last-child:after {content:"";}
-div[data-module=publication] ul[data-role=list] > li > div.author > span > span {display:inline-block; height:24px; line-height:24px; color:#666; vertical-align:middle;}
+div[data-module=publication] ul[data-role=list] > li > div.author > span > span {display:inline-block; height:24px; line-height:24px; color:#666; vertical-align:middle; white-space:nowrap;}
 div[data-module=publication] ul[data-role=list] > li > div.author > span > a {color:#2196F3; text-decoration:none; display:inline-block; height:24px; line-height:24px; vertical-align:middle; vertical-align:middle;}
 div[data-module=publication] ul[data-role=list] > li > div.author > span > a > i {display:inline-block; float:left; width:24px; height:24px; border:1px solid #ccc; background-size:cover; background-repeat:no-repeat; background-position:50% 50%; box-sizing:border-box; margin-right:5px; border-radius:50%;}
 
