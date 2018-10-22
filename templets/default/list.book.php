@@ -119,15 +119,15 @@ if (defined('__IM__') == false) exit;
 		<small><?php echo $item->loopnum; ?>.</small>
 		<b><?php echo $item->title; ?><?php echo $item->link ? '<a href="'.$item->link.'" target="_blank"><i class="xi xi-external-link"></i></a>' : ''; ?><?php echo $item->file != null ? '<a href="'.$item->file->download.'" download="'.$item->file->name.'"><i class="icon" style="background-image:url('.$item->file->icon.');">'.$item->file->name.'</i></a>' : ''; ?></b>
 		
+		<?php if (count($item->author) > 0) { ?>
 		<div class="author">
-			<?php if (count($item->author) > 0) { ?>
 			<i class="xi xi-users"></i>
 			<?php foreach ($item->author as $member) { ?>
 				<?php if ($member->midx == 0) { ?><span><span><?php echo $member->name; ?></span></span><?php } ?>
 				<?php if ($member->midx > 0) { $member = $IM->getModule('member')->getMember($member->midx); ?><span><a href="<?php echo $me->getUrl('list','author/'.$member->idx); ?>"><i class="photo" style="background-image:url(<?php echo $member->photo; ?>);"></i><?php echo $me->getAuthorName($member); ?></a></span><?php } ?>
 			<?php } ?>
-			<?php } ?>
 		</div>
+		<?php } ?>
 		
 		<div class="publisher">
 			<i class="xi xi-book-spread"></i>
@@ -135,6 +135,16 @@ if (defined('__IM__') == false) exit;
 			<?php echo strpos($item->page_no,'-') !== false ? 'pp. '.$item->page_no : 'p. '.$item->page_no; ?>,
 			ISBN : <?php echo $item->keyword; ?> (<a href="<?php echo $me->getUrl('list','year/'.$item->year); ?>"><?php echo $item->year; ?></a>)
 		</div>
+		
+		<?php if ($item->abstract) { ?>
+		<div class="abstract">
+			<button type="button"><i class="xi xi-list-ul-l"></i><span>Table of contents</span><i class="fa fa-caret-down"></i></button>
+			
+			<div>
+				<?php echo nl2br($item->abstract); ?>
+			</div>
+		</div>
+		<?php } ?>
 	</li>
 	<?php } ?>
 </ul>

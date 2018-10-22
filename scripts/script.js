@@ -7,7 +7,7 @@
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
  * @version 3.0.0
- * @modified 2018. 5. 11.
+ * @modified 2018. 10. 22.
  */
 var Publication = {
 	getUrl:function(view,idx) {
@@ -30,6 +30,10 @@ var Publication = {
 					$keyword.disable();
 				}
 				$("input[name=mode]",$form).disable();
+			});
+			
+			$("div.abstract > button").on("click",function() {
+				$(this).toggleClass("opened");
 			});
 		}
 	}
