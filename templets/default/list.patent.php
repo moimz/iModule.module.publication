@@ -57,6 +57,7 @@ if (defined('__IM__') == false) exit;
 				</li>
 				<?php } ?>
 				
+				<?php if ($is_configs_patent == false) { ?>
 				<li>
 					<label>구분</label>
 					<div>
@@ -69,6 +70,8 @@ if (defined('__IM__') == false) exit;
 						</div>
 					</div>
 				</li>
+				<?php } ?>
+				
 				<li>
 					<label>검색어</label>
 					<div>
@@ -105,7 +108,7 @@ if (defined('__IM__') == false) exit;
 	<?php foreach ($lists as $item) { ?>
 	<li>
 		<small><?php echo $item->loopnum; ?>.</small>
-		<b><label><?php echo $item->volume_no == 1 ? 'Application' : 'Registration'; ?></label><?php echo $item->title; ?><?php echo $item->file != null ? '<a href="'.$item->file->download.'" download="'.$item->file->name.'"><i class="icon" style="background-image:url('.$item->file->icon.');">'.$item->file->name.'</i></a>' : ''; ?></b>
+		<b><?php echo $is_configs_patent == true ? '' : '<label>'.($item->volume_no == 1 ? 'Application' : 'Registration').'</label>'; ?><?php echo $item->title; ?><?php echo $item->file != null ? '<a href="'.$item->file->download.'" download="'.$item->file->name.'"><i class="icon" style="background-image:url('.$item->file->icon.');">'.$item->file->name.'</i></a>' : ''; ?></b>
 		
 		<?php if (count($item->author) > 0) { ?>
 		<div class="author">

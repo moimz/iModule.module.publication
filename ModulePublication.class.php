@@ -256,6 +256,33 @@ class ModulePublication {
 		$templet->value = $values != null && isset($values->templet) == true ? $values->templet : '#';
 		$configs[] = $templet;
 		
+		$category = $this->getCategory($context);
+		if ($category->type == 'PATENT') {
+			$patent = new stdClass();
+			$patent->title = '종류';
+			$patent->name = 'patent';
+			$patent->type = 'select';
+			$patent->data = array();
+			$patent->data[] = array(0,'전체');
+			$patent->data[] = array(1,'Application');
+			$patent->data[] = array(2,'Registration');
+			$patent->value = 0;
+			$configs[] = $patent;
+		}
+		
+		if ($category->type == 'THESIS') {
+			$thesis = new stdClass();
+			$thesis->title = '종류';
+			$thesis->name = 'thesis';
+			$thesis->type = 'select';
+			$thesis->data = array();
+			$thesis->data[] = array('ALL','전체');
+			$thesis->data[] = array('Ph.D','Ph.D');
+			$thesis->data[] = array('MS','MS');
+			$thesis->value = 0;
+			$configs[] = $thesis;
+		}
+		
 		return $configs;
 	}
 	
@@ -549,6 +576,18 @@ class ModulePublication {
 		if ($author != null) $lists->join($this->table->author.' a','a.aidx=p.idx','LEFT')->where('a.midx',$author->idx);
 		if ($page_no != null) $lists->where('p.page_no',$page_no);
 		if ($volume_no != null) $lists->where('p.volume_no',$volume_no);
+		if ($category->type == 'PATENT' && isset($configs->patent) == true && $configs->patent != 0) {
+			$is_configs_patent = true;
+			$lists->where('p.volume_no',$configs->patent);
+		} else {
+			$is_configs_patent = false;
+		}
+		if ($category->type == 'THESIS' && isset($configs->thesis) == true && $configs->thesis != 'ALL') {
+			$is_configs_thesis = true;
+			$lists->where('p.page_no',$configs->thesis);
+		} else {
+			$is_configs_thesis = false;
+		}
 		$total = $lists->copy()->count();
 		$lists = $lists->limit($start,$limit)->orderBy('year','desc')->orderBy('idx','desc')->get();
 		for ($i=0, $loop=count($lists);$i<$loop;$i++) {

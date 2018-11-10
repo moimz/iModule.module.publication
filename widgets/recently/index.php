@@ -16,7 +16,7 @@ $category = $Widget->getValue('category');
 $count = $Widget->getValue('count');
 $cache = $Widget->getValue('cache');
 
-if (true || $Widget->checkCache() < time() - $cache) {
+if ($Widget->checkCache() < time() - $cache) {
 	$lists = $me->db()->select($me->getTable('article').' a','a.*, c.type')->join($me->getTable('category').' c','c.idx=a.category','LEFT');
 	if (count($category) > 0) $lists->where('a.category',$category,'IN');
 	$lists = $lists->limit($count)->orderBy('a.year','desc')->orderBy('a.idx','desc')->get();
@@ -25,7 +25,13 @@ if (true || $Widget->checkCache() < time() - $cache) {
 		$lists[$i]->category = $lists[$i]->category == 0 ? null : $me->getCategory($lists[$i]->category);
 		$lists[$i]->publisher = $me->getPublisher($lists[$i]->publisher);
 		
-		$page = $IM->getContextUrl('publication',$lists[$i]->category->idx,array(),array(),true);
+		if ($lists[$i]->category->type == 'THESIS') {
+			$page = $IM->getContextUrl('publication',$lists[$i]->category->idx,array(),array('thesis'=>$lists[$i]->page_no),true);
+		} elseif ($lists[$i]->category->type == 'PATENT') {
+			$page = $IM->getContextUrl('publication',$lists[$i]->category->idx,array(),array('patent'=>$lists[$i]->volume_no),true);
+		} else {
+			$page = $IM->getContextUrl('publication',$lists[$i]->category->idx,array(),array(),true);
+		}
 		$lists[$i]->link = $page;
 	}
 	
