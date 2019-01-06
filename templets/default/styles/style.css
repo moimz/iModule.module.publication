@@ -71,7 +71,8 @@ div[data-module=publication] ul[data-role=list] > li > div.abstract > button {ba
 div[data-module=publication] ul[data-role=list] > li > div.abstract > button > i {width:20px; height:20px; vertical-align:middle; text-align:left; line-height:20px;}
 div[data-module=publication] ul[data-role=list] > li > div.abstract > button > span {display:inline-block; height:20px; line-height:20px; padding:0px 5px; vertical-align:middle;}
 div[data-module=publication] ul[data-role=list] > li > div.abstract > button.opened > span + i:before {content:"\f0d8";}
-div[data-module=publication] ul[data-role=list] > li > div.abstract > div {padding:5px 0px 0px 25px; line-height:1.6; display:none; color:#666;}
+div[data-module=publication] ul[data-role=list] > li > div.abstract > div {padding:5px 0px 0px 25px; line-height:20px; display:none; color:#666;}
+div[data-module=publication] ul[data-role=list] > li > div.abstract > div > label {color:#fff; display:inline-block; padding:3px; line-height:14px; background:#0D47A1; border-radius:3px;}
 div[data-module=publication] ul[data-role=list] > li > div.abstract > button.opened + div {display:block;}
 
 div[data-module=publication] ul[data-role=list] > li.cover {padding-left:130px; position:relative;}

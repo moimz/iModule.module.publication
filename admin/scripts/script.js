@@ -7,7 +7,7 @@
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
  * @version 3.0.0
- * @modified 2018. 5. 11.
+ * @modified 2019. 1. 6.
  */
 var Publication = {
 	/**
@@ -414,7 +414,7 @@ var Publication = {
 									new Ext.form.TextArea({
 										fieldLabel:"목차",
 										name:"book_abstract",
-										height:150
+										afterBodyEl:'<div class="x-form-help">[[내용]] 입력시 내용이 강조되어 표시됩니다.</div>'
 									}),
 									new Ext.form.TextField({
 										fieldLabel:"도서링크",

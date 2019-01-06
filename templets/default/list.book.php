@@ -141,7 +141,7 @@ if (defined('__IM__') == false) exit;
 			<button type="button"><i class="xi xi-list-ul-l"></i><span>Table of contents</span><i class="fa fa-caret-down"></i></button>
 			
 			<div>
-				<?php echo nl2br($item->abstract); ?>
+				<?php echo nl2br(str_replace(array('[[',']]'),array('<label>','</label>'),$item->abstract)); ?>
 			</div>
 		</div>
 		<?php } ?>
