@@ -6,10 +6,11 @@
  * 
  * @file /modules/publication/admin/index.php
  * @author Arzz (arzz@arzz.com)
- * @license MIT License
+ * @license GPLv3
  * @version 3.0.0
- * @modified 2018. 2. 1.
+ * @modified 2019. 2. 6.
  */
+if (defined('__IM__') == false) exit;
 ?>
 <script>
 Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
@@ -98,9 +99,9 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 						load:function(store,records,success,e) {
 							if (success == false) {
 								if (e.getError()) {
-									Ext.Msg.show({title:Admin.getText("alert/error"),msg:e.getError(),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR})
+									Ext.Msg.show({title:Admin.getText("alert/error"),msg:e.getError(),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
 								} else {
-									Ext.Msg.show({title:Admin.getText("alert/error"),msg:Admin.getErrorText("LOAD_DATA_FAILED"),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR})
+									Ext.Msg.show({title:Admin.getText("alert/error"),msg:Admin.getErrorText("LOAD_DATA_FAILED"),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
 								}
 							}
 						}
@@ -230,9 +231,9 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 						load:function(store,records,success,e) {
 							if (success == false) {
 								if (e.getError()) {
-									Ext.Msg.show({title:Admin.getText("alert/error"),msg:e.getError(),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR})
+									Ext.Msg.show({title:Admin.getText("alert/error"),msg:e.getError(),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
 								} else {
-									Ext.Msg.show({title:Admin.getText("alert/error"),msg:Admin.getErrorText("LOAD_DATA_FAILED"),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR})
+									Ext.Msg.show({title:Admin.getText("alert/error"),msg:Admin.getErrorText("LOAD_DATA_FAILED"),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
 								}
 							}
 						}
@@ -389,9 +390,9 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 						load:function(store,records,success,e) {
 							if (success == false) {
 								if (e.getError()) {
-									Ext.Msg.show({title:Admin.getText("alert/error"),msg:e.getError(),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR})
+									Ext.Msg.show({title:Admin.getText("alert/error"),msg:e.getError(),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
 								} else {
-									Ext.Msg.show({title:Admin.getText("alert/error"),msg:Admin.getErrorText("LOAD_DATA_FAILED"),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR})
+									Ext.Msg.show({title:Admin.getText("alert/error"),msg:Admin.getErrorText("LOAD_DATA_FAILED"),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
 								}
 							}
 						}
