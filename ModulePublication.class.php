@@ -533,7 +533,7 @@ class ModulePublication {
 		$idx = $this->getIdx() ? explode('/',$this->getIdx()) : array('year');
 		$mode = $idx[0];
 		$code = count($idx) > 1 ? $idx[1] : 'all';
-		$p = count($idx) > 2 ? $idx[2] : 1;
+		$p = count($idx) > 2 && is_numeric($idx[2]) == true && $idx[2] > 0 ? $idx[2] : 1;
 		
 		$year = Request('year');
 		$publisher = Request('publisher');
