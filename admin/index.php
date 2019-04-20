@@ -70,7 +70,7 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 					"-",
 					new Ext.Button({
 						text:"출판물 추가",
-						iconCls:"mi mi-add",
+						iconCls:"mi mi-plus",
 						handler:function() {
 							Publication.article.add();
 						}
@@ -202,7 +202,7 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 				tbar:[
 					new Ext.Button({
 						text:"카테고리 추가",
-						iconCls:"mi mi-add",
+						iconCls:"mi mi-plus",
 						handler:function() {
 							Publication.category.add();
 						}
@@ -361,7 +361,7 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 					"-",
 					new Ext.Button({
 						text:"매체 추가",
-						iconCls:"mi mi-add",
+						iconCls:"mi mi-plus",
 						handler:function() {
 							Publication.publisher.add();
 						}

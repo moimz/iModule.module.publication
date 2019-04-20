@@ -133,7 +133,7 @@ var Publication = {
 												valueField:"idx"
 											}),
 											new Ext.Button({
-												iconCls:"mi mi-add",
+												iconCls:"mi mi-plus",
 												text:"저널추가",
 												style:{marginLeft:"5px"},
 												handler:function() {
@@ -266,7 +266,7 @@ var Publication = {
 												valueField:"idx"
 											}),
 											new Ext.Button({
-												iconCls:"mi mi-add",
+												iconCls:"mi mi-plus",
 												text:"컨퍼런스추가",
 												style:{marginLeft:"5px"},
 												handler:function() {
@@ -380,7 +380,7 @@ var Publication = {
 												valueField:"idx"
 											}),
 											new Ext.Button({
-												iconCls:"mi mi-add",
+												iconCls:"mi mi-plus",
 												text:"출판사추가",
 												style:{marginLeft:"5px"},
 												handler:function() {
@@ -457,7 +457,7 @@ var Publication = {
 												valueField:"idx"
 											}),
 											new Ext.Button({
-												iconCls:"mi mi-add",
+												iconCls:"mi mi-plus",
 												text:"언론매체추가",
 												style:{marginLeft:"5px"},
 												handler:function() {
@@ -505,7 +505,7 @@ var Publication = {
 											}),
 											new Ext.Button({
 												text:"저자추가(수기)",
-												iconCls:"mi mi-add",
+												iconCls:"mi mi-plus",
 												handler:function() {
 													Publication.author.add();
 												}
