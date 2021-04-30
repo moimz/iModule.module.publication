@@ -600,6 +600,7 @@ class ModulePublication {
 			
 			$lists[$i]->author = $this->db()->select($this->table->author)->where('aidx',$lists[$i]->idx)->orderBy('sort','asc')->get();
 			$lists[$i]->publisher = $this->getPublisher($lists[$i]->publisher);
+			$lists[$i]->cover = $lists[$i]->cover == 0 ? null : $this->IM->getModule('attachment')->getFileInfo($lists[$i]->cover);
 			$lists[$i]->file = $lists[$i]->file == 0 ? null : $this->IM->getModule('attachment')->getFileInfo($lists[$i]->file);
 		}
 		

@@ -26,8 +26,10 @@ if ($idx) {
 		$results->message = $this->getErrorText('NOT_FOUND');
 		return;
 	}
+	$coverIdx = $data->cover;
 	$fileIdx = $data->file;
 } else {
+	$coverIdx = 0;
 	$fileIdx = 0;
 }
 
@@ -156,6 +158,23 @@ if (count($errors) == 0) {
 	else $remove->where('midx',0);
 	$remove->execute();
 	
+	if ($coverIdx > 0 && Request('cover_delete')) {
+		$this->IM->getModule('attachment')->fileDelete($coverIdx);
+		$coverIdx = 0;
+	}
+	
+	if (isset($_FILES['cover']) == true && $_FILES['cover']['tmp_name']) {
+		if ($coverIdx == 0) {
+			$coverIdx = $this->IM->getModule('attachment')->fileSave($_FILES['cover']['name'],$_FILES['cover']['tmp_name'],'publication','article','PUBLISHED',true);
+		} else {
+			$coverIdx = $this->IM->getModule('attachment')->fileReplace($coverIdx,$_FILES['cover']['name'],$_FILES['cover']['tmp_name'],true);
+		}
+	}
+	
+	if ($coverIdx !== false) {
+		$this->db()->update($this->table->article,array('cover'=>$coverIdx))->where('idx',$idx)->execute();
+	}
+	
 	if ($fileIdx > 0 && Request('file_delete')) {
 		$this->IM->getModule('attachment')->fileDelete($fileIdx);
 		$fileIdx = 0;
@@ -165,7 +184,7 @@ if (count($errors) == 0) {
 		if ($fileIdx == 0) {
 			$fileIdx = $this->IM->getModule('attachment')->fileSave($_FILES['file']['name'],$_FILES['file']['tmp_name'],'publication','article','PUBLISHED',true);
 		} else {
-			$fileIdx = $this->IM->getModule('attachment')->fileReplace($imageIdx,$_FILES['file']['name'],$_FILES['file']['tmp_name'],true);
+			$fileIdx = $this->IM->getModule('attachment')->fileReplace($fileIdx,$_FILES['file']['name'],$_FILES['file']['tmp_name'],true);
 		}
 	}
 	

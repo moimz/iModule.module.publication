@@ -77,6 +77,7 @@ for ($i=0, $loop=count($lists);$i<$loop;$i++) {
 		$lists[$i]->publisher_code = 'ISBN '.$lists[$i]->keyword;
 	}
 	
+	$lists[$i]->cover = $lists[$i]->cover == 0 ? null : $this->IM->getModule('attachment')->getFileInfo($lists[$i]->cover);
 	$lists[$i]->file = $lists[$i]->file == 0 ? null : $this->IM->getModule('attachment')->getFileInfo($lists[$i]->file);
 }
 

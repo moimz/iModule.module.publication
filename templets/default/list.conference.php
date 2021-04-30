@@ -115,7 +115,11 @@ if (defined('__IM__') == false) exit;
 
 <ul data-role="list">
 	<?php foreach ($lists as $item) { ?>
-	<li>
+	<li<?php echo $item->cover != null ? ' class="cover"' : ''; ?>>
+		<?php if ($item->cover != null) { ?>
+		<div class="cover" style="background-image:url(<?php echo $item->cover->thumbnail; ?>);"></div>
+		<?php } ?>
+		
 		<small><?php echo $item->loopnum; ?>.</small>
 		<b><label><?php echo $item->page_no; ?></label><?php echo $item->title; ?><?php echo $item->file != null ? '<a href="'.$item->file->download.'" download="'.$item->file->name.'"><i class="icon" style="background-image:url('.$item->file->icon.');">'.$item->file->name.'</i></a>' : ''; ?></b>
 		

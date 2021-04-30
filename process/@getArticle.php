@@ -137,6 +137,7 @@ for ($i=0, $loop=count($authors);$i<$loop;$i++) {
 
 $data->author = json_encode($authors,JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
 
+$data->cover = $data->cover == 0 ? null : $this->IM->getModule('attachment')->getFileInfo($data->cover);
 $data->file = $data->file == 0 ? null : $this->IM->getModule('attachment')->getFileInfo($data->file);
 
 $results->success = true;

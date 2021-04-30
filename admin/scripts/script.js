@@ -88,12 +88,6 @@ var Publication = {
 												
 												Ext.getCmp("ModulePublicationArticleAddForm-"+data.type).show();
 												Ext.getCmp("ModulePublicationArticleAddForm-"+data.type).enable();
-												
-												if (value == "BOOK") {
-													Ext.getCmp("ModulePublicationArticleAddAttachment").setTitle("표지이미지");
-												} else {
-													Ext.getCmp("ModulePublicationArticleAddAttachment").setTitle("첨부파일");
-												}
 											}
 										}
 									})
@@ -602,7 +596,31 @@ var Publication = {
 								]
 							}),
 							new Ext.form.FieldSet({
-								id:"ModulePublicationArticleAddAttachment",
+								title:"표지이미지",
+								items:[
+									new Ext.form.FieldContainer({
+										layout:{type:"vbox",align:"stretch"},
+										style:{marginBottom:0},
+										items:[
+											new Ext.form.FileUploadField({
+												name:"cover",
+												buttonText:"이미지파일선택",
+												allowBlank:true,
+												accept:"image/*",
+												style:{marginBottom:0}
+											}),
+											new Ext.form.Checkbox({
+												boxLabel:"첨부된 파일 삭제하기",
+												name:"cover_delete",
+												hidden:true,
+												style:{marginBottom:0}
+											})
+										],
+										afterBodyEl:'<div class="x-form-help">목록상에 보일 표지이미지를 업로드합니다. 표지이미지 파일은 다운로드되지 않습니다.</div>'
+									})
+								]
+							}),
+							new Ext.form.FieldSet({
 								title:"첨부파일",
 								items:[
 									new Ext.form.FieldContainer({
@@ -621,7 +639,8 @@ var Publication = {
 												hidden:true,
 												style:{marginBottom:0}
 											})
-										]
+										],
+										afterBodyEl:'<div class="x-form-help">표지이미지가 아닌, 별도로 다운로드가능한 첨부파일(PDF 등)을 업로드합니다.</div>'
 									})
 								]
 							})
@@ -678,6 +697,11 @@ var Publication = {
 								success:function(form,action) {
 									var author = JSON.parse(form.findField("author").getValue());
 									Ext.getCmp("ModulePublicationArticleAddFormAuthorList").getStore().add(author);
+									
+									if (action.result.data.cover != null) {
+										Ext.getCmp("ModulePublicationArticleAddForm").getForm().findField("cover_delete").setBoxLabel(action.result.data.cover.name+ "("+iModule.getFileSize(action.result.data.cover.size)+") 삭제");
+										Ext.getCmp("ModulePublicationArticleAddForm").getForm().findField("cover_delete").show();
+									}
 									
 									if (action.result.data.file != null) {
 										Ext.getCmp("ModulePublicationArticleAddForm").getForm().findField("file_delete").setBoxLabel(action.result.data.file.name+ "("+iModule.getFileSize(action.result.data.file.size)+") 삭제");

@@ -109,14 +109,18 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 				}),
 				columns:[{
 					text:"출판물명",
-					minWidth:150,
+					minWidth:200,
 					flex:1,
 					dataIndex:"title",
 					sortable:true,
 					renderer:function(value,p,record) {
 						var sHTML = "";
+						if (record.data.cover != null) {
+							sHTML+= '<i style="display:inline-block; margin:-4px 5px -4px -5px; width:18px; height:26px; background:url('+record.data.cover.thumbnail+') no-repeat 0 50%; vertical-align:middle; float:left; background-size:cover; border:1px solid #ccc;"></i>';
+						}
+						
 						if (record.data.file != null) {
-							sHTML+= '<i style="display:inline-block; width:16px; height:16px; background:url('+record.data.file.icon+') no-repeat 0 50%; vertical-align:middle; float:left; background-size:contain; margin-right:5px;"></i>';
+							sHTML+= '<i style="display:inline-block; width:16px; height:16px; background:url('+record.data.file.icon+') no-repeat 0 50%; vertical-align:middle; float:right; background-size:contain; margin-left:5px; margin-right:-5px;"></i>';
 						}
 						sHTML+= value;
 						return sHTML;

@@ -122,6 +122,12 @@
 					"length":255,
 					"comment":"링크주소"
 				},
+				"cover":{
+					"type":"int",
+					"length":11,
+					"default":0,
+					"comment":"커버이미지"
+				},
 				"file":{
 					"type":"int",
 					"length":11,

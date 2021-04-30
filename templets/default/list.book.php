@@ -113,8 +113,10 @@ if (defined('__IM__') == false) exit;
 
 <ul data-role="list" class="book">
 	<?php foreach ($lists as $item) { ?>
-	<li class="cover">
-		<div class="cover" style="background-image:url(<?php echo $item->file == null ? $Templet->getDir().'/images/nobook.png' : $item->file->thumbnail; ?>);"></div>
+	<li<?php echo $item->cover != null ? ' class="cover"' : ''; ?>>
+		<?php if ($item->cover != null) { ?>
+		<div class="cover" style="background-image:url(<?php echo $item->cover->thumbnail; ?>);"></div>
+		<?php } ?>
 		
 		<small><?php echo $item->loopnum; ?>.</small>
 		<b><?php echo $item->title; ?><?php echo $item->link ? '<a href="'.$item->link.'" target="_blank"><i class="xi xi-external-link"></i></a>' : ''; ?><?php echo $item->file != null ? '<a href="'.$item->file->download.'" download="'.$item->file->name.'"><i class="icon" style="background-image:url('.$item->file->icon.');">'.$item->file->name.'</i></a>' : ''; ?></b>
